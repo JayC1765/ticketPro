@@ -15,11 +15,11 @@ function Navbar() {
           variant="h3"
           style={{ textDecoration: 'none', color: 'inherit' }}
         >
-          Ticketing App
+          TicketPro
         </Typography>
         <Box>
           <Button component={Link} to="/admin" color="inherit">
-            Admin
+            <Typography>Admin Portal</Typography>
           </Button>
         </Box>
       </Toolbar>
