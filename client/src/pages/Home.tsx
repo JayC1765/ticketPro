@@ -20,15 +20,15 @@ const Home: React.FC = () => {
           }}
         >
           <TabList onChange={handleChange} className="home-tabs">
-            <Tab label="Dashboard" value="1" />
-            <Tab label="Create Ticket" value="2" />
+            <Tab label="Create Ticket" value="1" />
+            <Tab label="Dashboard" value="2" />
           </TabList>
         </Box>
         <TabPanel value="1">
-          <Typography>Tickets Dashboard</Typography>
+          <TicketForm />
         </TabPanel>
         <TabPanel value="2">
-          <TicketForm />
+          <Typography>Tickets Dashboard for Logged Users</Typography>
         </TabPanel>
       </TabContext>
     </Box>

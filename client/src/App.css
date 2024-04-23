@@ -28,3 +28,8 @@
   flex-direction: column;
   gap: 2rem;
 }
+
+.name-field-container {
+  display: flex;
+  gap: 3rem;
+}
