@@ -17,10 +17,12 @@ const TicketForm: React.FC = () => {
 
     setIsSuccess(false);
     setIsError(false);
+    const apiURL = 'ticketpro-production.up.railway.app';
 
     try {
       const response = await fetch(
-        'http://localhost:8000/customers/create-ticket',
+        // 'http://localhost:8000/customers/create-ticket',
+        `${apiURL}/customers/create-ticket`,
         {
           method: 'POST',
           headers: {
