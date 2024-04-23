@@ -33,3 +33,21 @@
   display: flex;
   gap: 3rem;
 }
+
+.ticket-card {
+  transition: border-color 0.3s; /* Add transition effect */
+  padding: 30px;
+  height: 200px;
+  box-sizing: border-box;
+}
+
+.ticket-card:hover {
+  border: 1px solid lightblue; /* Highlight border on hover */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+/* .description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: preline;
+} */

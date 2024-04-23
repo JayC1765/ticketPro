@@ -4,3 +4,12 @@ export class ApiError extends Error {
     this.name = 'ApiError';
   }
 }
+
+export interface Ticket {
+  id: number;
+  firstname: string;
+  lastname: string;
+  description: string;
+  status: string;
+  timestamp: string;
+}
