@@ -22,7 +22,7 @@ const TicketForm: React.FC = () => {
     try {
       const response = await fetch(
         // 'http://localhost:8000/customers/create-ticket',
-        `${apiURL}/customers/create-ticket`,
+        '/customers/create-ticket',
         {
           method: 'POST',
           headers: {
