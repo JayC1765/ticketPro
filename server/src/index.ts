@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import cors from 'cors';
 import customerRouter from './routes/customerRouter';
+import adminRouter from './routes/adminRouter';
 
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
@@ -22,6 +23,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use('/customers', customerRouter);
+app.use('/admin', adminRouter);
 
 // catch-all route handler for any requests to an unknown route
 app.use((_req, res) =>

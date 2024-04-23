@@ -36,13 +36,12 @@ const TicketForm: React.FC = () => {
       );
 
       if (!response.ok) {
-        const errorResponse = await response.json();
-        throw new ApiError(errorResponse.detail || 'Failed to create ticket');
+        throw new ApiError('Failed to create ticket');
       }
 
       const data = await response.json();
 
-      if (data.isSuccess) {
+      if (data) {
         setFirstName('');
         setLastName('');
         setEmail('');
@@ -61,7 +60,7 @@ const TicketForm: React.FC = () => {
         setErrorMessage(err.message);
       } else {
         setIsError(true);
-        setErrorMessage('An unexpected error occurred.');
+        setErrorMessage('An unexpected error occurred: ', err);
       }
 
       setFirstName('');
