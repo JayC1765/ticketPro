@@ -17,7 +17,6 @@ const TicketForm: React.FC = () => {
 
     setIsSuccess(false);
     setIsError(false);
-    const apiURL = 'ticketpro-production.up.railway.app';
 
     try {
       const response = await fetch(
