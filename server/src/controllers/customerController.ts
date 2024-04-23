@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { TicketType } from '../../../types/types';
+import { TicketType } from '../types/types';
 import query from '../models/models';
 
 const customerController = {

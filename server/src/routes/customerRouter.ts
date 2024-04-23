@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import customerController from '../controllers/customerController';
 
 const customerRouter = express.Router();
@@ -6,7 +6,7 @@ const customerRouter = express.Router();
 customerRouter.post(
   '/create-ticket',
   customerController.createTicket,
-  (_req: Request, res: Response) => {
+  (_req, res) => {
     res.status(200).json(res.locals.result);
   }
 );
