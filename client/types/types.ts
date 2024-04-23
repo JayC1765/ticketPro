@@ -9,7 +9,14 @@ export interface Ticket {
   id: number;
   firstname: string;
   lastname: string;
+  email: string;
   description: string;
-  status: string;
+  status: TicketStatus;
   timestamp: string;
+}
+
+export enum TicketStatus {
+  NEW = 'new',
+  IN_PROGRESS = 'in progress',
+  RESOLVED = 'resolved',
 }

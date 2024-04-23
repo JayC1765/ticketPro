@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { ApiError } from '../../types/types';
-import { Grid, Box } from '@mui/material';
+import { Grid } from '@mui/material';
 import TicketCard from '../components/TicketCard';
 import { Ticket } from '../../types/types';
+import TicketDrawer from '../components/TicketDrawer';
 
 const Admin: React.FC = () => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [currTicket, setCurrTicket] = useState<Ticket | null>(null);
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -19,7 +26,6 @@ const Admin: React.FC = () => {
         }
 
         const data = await response.json();
-        console.log('data: ', data);
         setTickets(data);
       } catch (err) {
         if (err instanceof ApiError) {
@@ -40,8 +46,19 @@ const Admin: React.FC = () => {
       sx={{ gap: '30px', marginTop: '10px' }}
     >
       {tickets.map((ticket) => (
-        <TicketCard key={ticket.id} ticket={ticket} />
+        <TicketCard
+          key={ticket.id}
+          ticket={ticket}
+          toggleDrawer={toggleDrawer}
+          setCurrTicket={setCurrTicket}
+        />
       ))}
+      <TicketDrawer
+        isDrawerOpen={isDrawerOpen}
+        toggleDrawer={toggleDrawer}
+        currTicket={currTicket}
+        setCurrTicket={setCurrTicket}
+      />
     </Grid>
   );
 };
