@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ApiError } from '../../../types/types';
+import { ApiError } from '../../types/types';
 
 const Admin: React.FC = () => {
   // const [tickets, setTickets] = useState<>([])

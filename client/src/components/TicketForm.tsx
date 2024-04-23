@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
-import { ApiError } from '../../../types/types';
+import { ApiError } from '../../types/types';
 
 const TicketForm: React.FC = () => {
   const [firstName, setFirstName] = useState('');
@@ -60,7 +60,7 @@ const TicketForm: React.FC = () => {
         setErrorMessage(err.message);
       } else {
         setIsError(true);
-        setErrorMessage('An unexpected error occurred: ', err);
+        setErrorMessage('An unexpected error occurred');
       }
 
       setFirstName('');
