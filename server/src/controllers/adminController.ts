@@ -1,5 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import { UpdateStatusRequest, AddCommentRequest } from '../types/types';
+import {
+  UpdateStatusRequest,
+  AddCommentRequest,
+  GetCommentsRequest,
+} from '../types/types';
 import query from '../models/models';
 
 const adminController = {
@@ -47,7 +51,7 @@ const adminController = {
   async addComment(req: AddCommentRequest, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
-      const { description, username } = req.body;
+      const { comment, username } = req.body;
 
       // Check if ticket with the provided ID exists
       const checkTicketQuery = `
@@ -63,23 +67,57 @@ const adminController = {
 
       // Insert comment into the database
       const addCommentQuery = `
-        INSERT INTO comments (ticket_id, description, username)
+        INSERT INTO comments (ticket_id, comment, username)
         VALUES ($1, $2, $3)
         RETURNING *;
       `;
       const commentResult = await query(addCommentQuery, [
         id,
-        description,
+        comment,
         username,
       ]);
       const newComment = commentResult.rows[0];
-      console.log('This is the new Comment ', newComment);
 
       res
         .status(200)
         .json({ message: 'Comment added successfully', comment: newComment });
     } catch (err) {
       console.log('Error while adding comment:', err);
+      next(err);
+    }
+  },
+
+  async getAllComments(
+    req: GetCommentsRequest,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const { id } = req.params;
+
+      const checkTicketQuery = `
+        SELECT * FROM tickets
+        WHERE id = $1;
+      `;
+      const ticketResult = await query(checkTicketQuery, [id]);
+      const ticket = ticketResult.rows[0];
+
+      if (!ticket) {
+        res.status(404).json({ error: 'Ticket not found' });
+        return;
+      }
+
+      // Retrieve all comments associated with the ticket ID
+      const getAllCommentsQuery = `
+        SELECT * FROM comments
+        WHERE ticket_id = $1;
+      `;
+      const commentResult = await query(getAllCommentsQuery, [id]);
+      const comments = commentResult.rows;
+
+      res.status(200).json(comments);
+    } catch (err) {
+      console.log('Error while retrieving comments:', err);
       next(err);
     }
   },

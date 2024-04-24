@@ -20,7 +20,7 @@
 }
 
 .ticket-form {
-  width: 80%;
+  width: 60%;
 }
 
 .form-fields {
@@ -35,13 +35,13 @@
 }
 
 .ticket-card {
-  transition: border-color 0.3s; /* Add transition effect */
+  transition: border-color 0.3s;
   padding: 10px;
   height: 200px;
   box-sizing: border-box;
 }
 
 .ticket-card:hover {
-  border: 1px solid lightblue; /* Highlight border on hover */
-  cursor: pointer; /* Change cursor to pointer on hover */
+  border: 1px solid lightblue;
+  cursor: pointer;
 }

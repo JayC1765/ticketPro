@@ -20,3 +20,11 @@ export enum TicketStatus {
   IN_PROGRESS = 'in progress',
   RESOLVED = 'resolved',
 }
+
+export interface Comment {
+  id: number;
+  ticket_id: number;
+  comment: string;
+  timestamp: string;
+  username: string;
+}

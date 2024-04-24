@@ -18,7 +18,6 @@ const Admin: React.FC = () => {
     const fetchTickets = async () => {
       try {
         const response = await fetch('http://localhost:8000/admin/allTickets');
-        // production mode
         // const response = await fetch('/admin/allTickets');
 
         if (!response.ok) {

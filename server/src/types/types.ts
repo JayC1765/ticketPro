@@ -21,7 +21,13 @@ export interface AddCommentRequest extends Request {
     id: string;
   };
   body: {
-    description: string;
+    comment: string;
     username: string;
+  };
+}
+
+export interface GetCommentsRequest extends Request {
+  params: {
+    id: string;
   };
 }
