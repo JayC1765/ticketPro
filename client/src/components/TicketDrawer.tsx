@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Drawer,
   Box,
@@ -9,14 +9,16 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  SelectChangeEvent,
 } from '@mui/material';
-import { Ticket, TicketStatus } from '../../types/types';
+import { Ticket, TicketStatus, ApiError } from '../../types/types';
 
 interface TicketDrawerProps {
   isDrawerOpen: boolean;
   toggleDrawer: () => void;
   currTicket: Ticket | null;
   setCurrTicket: React.Dispatch<React.SetStateAction<Ticket | null>>;
+  setTickets: React.Dispatch<React.SetStateAction<Ticket[]>>;
 }
 
 const TicketDrawer: React.FC<TicketDrawerProps> = ({
@@ -24,12 +26,25 @@ const TicketDrawer: React.FC<TicketDrawerProps> = ({
   toggleDrawer,
   currTicket,
   setCurrTicket,
+  setTickets,
 }) => {
+  const [status, setStatus] = useState<TicketStatus>(TicketStatus.NEW);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [successMessage, setSuccessMessage] = useState<string>('');
+
   useEffect(() => {
     if (!isDrawerOpen) {
       setCurrTicket(null);
     }
   }, [isDrawerOpen, setCurrTicket]);
+
+  useEffect(() => {
+    if (currTicket) {
+      setStatus(currTicket.status);
+    } else {
+      setStatus(TicketStatus.NEW);
+    }
+  }, [currTicket]);
 
   const formattedTimestamp = currTicket
     ? new Date(currTicket.timestamp).toLocaleDateString('en-US', {
@@ -38,6 +53,47 @@ const TicketDrawer: React.FC<TicketDrawerProps> = ({
         day: '2-digit',
       })
     : '';
+
+  const handleStatusChange = async (event: SelectChangeEvent<TicketStatus>) => {
+    const newStatus = event.target.value as TicketStatus;
+    setStatus(newStatus);
+
+    try {
+      if (currTicket) {
+        const response = await fetch(
+          `http://localhost:8000/admin/updateTicket/${currTicket.id}`,
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status: newStatus }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new ApiError('Failed to create ticket');
+        }
+
+        setIsSuccess(true);
+        setSuccessMessage('Updated!');
+        setTickets((prevTickets) =>
+          prevTickets.map((ticket) =>
+            ticket.id === currTicket.id
+              ? { ...ticket, status: newStatus }
+              : ticket
+          )
+        );
+
+        setTimeout(() => {
+          setIsSuccess(false);
+          setSuccessMessage('');
+        }, 2000);
+      }
+    } catch (err) {
+      if (err) console.log(err);
+    }
+  };
 
   return (
     <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer}>
@@ -52,24 +108,36 @@ const TicketDrawer: React.FC<TicketDrawerProps> = ({
             <Typography variant="body1">Email: {currTicket.email}</Typography>
 
             <Typography variant="body1">Date: {formattedTimestamp}</Typography>
-
-            <FormControl fullWidth sx={{ mt: 2 }}>
-              <InputLabel id="status-label">Status</InputLabel>
-              <Select
-                labelId="status-label"
-                id="status-select"
-                value={currTicket.status}
-                label="Status"
-                // onChange={handleStatusChange}
-              >
-                <MenuItem value={TicketStatus.NEW}>New</MenuItem>
-                <MenuItem value={TicketStatus.IN_PROGRESS}>
-                  In Progress
-                </MenuItem>
-                <MenuItem value={TicketStatus.RESOLVED}>Resolved</MenuItem>
-              </Select>
-            </FormControl>
-
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '50%',
+                mt: 2,
+              }}
+            >
+              <FormControl sx={{ width: '70%' }}>
+                <InputLabel id="status-label">Status</InputLabel>
+                <Select
+                  labelId="status-label"
+                  id="status-select"
+                  value={status}
+                  label="Status"
+                  onChange={handleStatusChange}
+                >
+                  <MenuItem value={TicketStatus.NEW}>New</MenuItem>
+                  <MenuItem value={TicketStatus.IN_PROGRESS}>
+                    In Progress
+                  </MenuItem>
+                  <MenuItem value={TicketStatus.RESOLVED}>Resolved</MenuItem>
+                </Select>
+              </FormControl>
+              {isSuccess && (
+                <Typography sx={{ mt: '20px', color: 'green' }}>
+                  {successMessage}
+                </Typography>
+              )}
+            </Box>
             <Typography variant="body1" sx={{ wordBreak: 'break-word' }}>
               Description: {currTicket.description}
             </Typography>

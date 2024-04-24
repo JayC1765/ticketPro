@@ -58,6 +58,7 @@ const Admin: React.FC = () => {
         toggleDrawer={toggleDrawer}
         currTicket={currTicket}
         setCurrTicket={setCurrTicket}
+        setTickets={setTickets}
       />
     </Grid>
   );

@@ -7,4 +7,12 @@ adminRouter.get('/allTickets', adminController.getAllTickets, (_req, res) => {
   res.status(200).json(res.locals.result);
 });
 
+adminRouter.patch(
+  '/updateTicket/:id',
+  adminController.updateStatus,
+  (_req, res) => {
+    res.status(200);
+  }
+);
+
 export default adminRouter;
