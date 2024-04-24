@@ -23,8 +23,8 @@ const TicketComments: React.FC<TicketCommentsProps> = ({
     const fetchComments = async () => {
       try {
         const response = await fetch(
-          // `http://localhost:8000/admin/allComments/${ticketId}`
-          `/admin/allComments/${ticketId}`
+          `http://localhost:8000/admin/allComments/${ticketId}`
+          // `/admin/allComments/${ticketId}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch comments');

@@ -64,8 +64,8 @@ const TicketDrawer: React.FC<TicketDrawerProps> = ({
     try {
       if (currTicket) {
         const response = await fetch(
-          // `http://localhost:8000/admin/updateTicket/${currTicket.id}`,
-          `/admin/updateTicket/${currTicket.id}`,
+          `http://localhost:8000/admin/updateTicket/${currTicket.id}`,
+          // `/admin/updateTicket/${currTicket.id}`,
           {
             method: 'PATCH',
             headers: {
@@ -105,8 +105,8 @@ const TicketDrawer: React.FC<TicketDrawerProps> = ({
     try {
       if (currTicket) {
         const response = await fetch(
-          // `http://localhost:8000/admin/addComments/${currTicket.id}`,
-          `/admin/addComments/${currTicket.id}`,
+          `http://localhost:8000/admin/addComments/${currTicket.id}`,
+          // `/admin/addComments/${currTicket.id}`,
           {
             method: 'POST',
             headers: {
