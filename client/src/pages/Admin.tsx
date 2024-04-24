@@ -17,8 +17,8 @@ const Admin: React.FC = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await fetch('http://localhost:8000/admin/allTickets');
-        // const response = await fetch('/admin/allTickets');
+        // const response = await fetch('http://localhost:8000/admin/allTickets');
+        const response = await fetch('/admin/allTickets');
 
         if (!response.ok) {
           throw new ApiError('Failed to retrieve all tickets');
