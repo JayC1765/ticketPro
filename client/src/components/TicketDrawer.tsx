@@ -93,6 +93,8 @@ const TicketDrawer: React.FC<TicketDrawerProps> = ({
           setIsSuccess(false);
           setSuccessMessage('');
         }, 2000);
+
+        console.log('Would normally send email here with body');
       }
     } catch (err) {
       if (err) console.log(err);
@@ -126,6 +128,8 @@ const TicketDrawer: React.FC<TicketDrawerProps> = ({
         if (data.comment) {
           setNewComment(data.comment);
         }
+
+        console.log('Would normally send email here with body');
 
         setComment('');
       }
