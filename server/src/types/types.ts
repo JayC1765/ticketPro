@@ -15,3 +15,13 @@ export interface UpdateStatusRequest extends Request {
     status: string;
   };
 }
+
+export interface AddCommentRequest extends Request {
+  params: {
+    id: string;
+  };
+  body: {
+    description: string;
+    username: string;
+  };
+}
