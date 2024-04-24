@@ -29,6 +29,25 @@ pool.query(
   }
 );
 
+// Create comments table
+pool.query(
+  `CREATE TABLE IF NOT EXISTS comments (
+    id SERIAL PRIMARY KEY,
+    ticket_id INT NOT NULL,
+    description VARCHAR NOT NULL,
+    username VARCHAR NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ticket_id) REFERENCES tickets(id) ON DELETE CASCADE
+  );`,
+  (err, _res) => {
+    if (err) {
+      console.error('Error creating comments table:', err);
+    } else {
+      console.log('Comments table created successfully');
+    }
+  }
+);
+
 const query = (text: string, params?: any[]) => {
   try {
     console.log('executed query ', text);
